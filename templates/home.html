@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+
+{% block title %}Abduniyoz Aliyorov - Shaxsiy Brend Mutaxassisi{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center min-vh-100">
+            <div class="col-lg-6">
+                <div class="hero-content">
+                    <p class="hero-greeting">Salom, men</p>
+                    
+                    <h1 class="hero-name">
+                        <span class="first-name">Abduniyoz</span>
+                        <span class="last-name">Aliyorov</span>
+                    </h1>
+                    
+                    <h2 class="hero-title">
+                        <span class="highlight">Shaxsiy Brend</span>
+                        <span class="subtitle">Mutaxassisiman</span>
+                    </h2>
+                    
+                    <!-- Stats - Bir qatorda -->
+                    <div class="hero-stats-single-row mt-5">
+                        <div class="stats-container">
+                            <div class="stat-item">
+                                <h3>2+</h3>
+                                <p>Yillik Tajriba</p>
+                            </div>
+                            <div class="stat-item">
+                                <h3>20+</h3>
+                                <p>Loyihalar</p>
+                            </div>
+                            <div class="stat-item">
+                                <h3>100%</h3>
+                                <p>Mijoz Qoniqishi</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Buttons - Bir qatorda -->
+                    <div class="hero-buttons-single-row mt-4">
+                        <a href="{{ url_for('form') }}" class="btn btn-primary btn-lg me-3">
+                            Bog'lanish
+                        </a>
+                        <a href="{{ url_for('projects') }}" class="btn btn-outline-primary btn-lg">
+                            Loyihalarim
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6">
+                <div class="hero-image-container">
+                    <img src="{{ url_for('static', filename='images/team/abduniyoz.jpg') }}" 
+                         alt="Abduniyoz Aliyorov" 
+                         class="hero-main-image">
+                    <div class="hero-image-bg"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="about-section py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Rasm - Chap taraf -->
+            <div class="col-lg-5 mb-4 mb-lg-0">
+                <div class="about-image-section">
+                    <img src="{{ url_for('static', filename='images/team/abduniyoz-2.jpg') }}" 
+                         alt="Abduniyoz Aliyorov haqida"
+                         class="about-section-image img-fluid rounded-3">
+                    <div class="about-image-decoration"></div>
+                </div>
+            </div>
+            
+            <!-- Matn - O'ng taraf -->
+            <div class="col-lg-7">
+                <div class="section-header mb-4">
+                    <h2>Men Haqimda</h2>
+                    <div class="section-divider"></div>
+                </div>
+                
+                <div class="about-content">
+                    <p class="lead">
+                        Men — <strong>Abduniyoz Aliyorov</strong>, 2 yildan ortiq tajribaga ega <strong>Shaxsiy Brend Mutaxassisiman</strong>.
+                    </p>
+                    
+                    <p>
+                        So'nggi yillarda o'nlab mutaxassislar, tadbirkorlar va ijodkorlar bilan birgalikda ularning shaxsiy brendini noldan boshlab professional darajagacha olib chiqqanman. Shu vaqt ichida 20 dan ortiq muvaffaqiyatli loyihalarda ishtirok etdim va har birida natija, ishonch hamda brend qadriyatlarini ustuvor qo'ydim.
+                    </p>
+                    
+                    <p>
+                        Mening asosiy yo'nalishim — <strong>shaxsiy brend strategiyasi, kontent marketing va vizual identifikatsiyani uyg'unlashtirish</strong>.
+                        Men odamlarning nafaqat auditoriyada tanilishini, balki ularga ishonch uyg'otadigan imidj yaratishini maqsad qilaman. Chunki bugungi kunda brend — bu shunchaki tashqi ko'rinish emas, bu insonning fikri, qadriyati va o'ziga xosligidir.
+                    </p>
+                    
+                    <p>
+                        Men ishlab chiqqan strategiyalar orqali ko'plab mijozlar o'z sohasida ekspert sifatida tanilgan, ularning profillari esa sotuvchi va ishonchli platformaga aylangan.
+                        Har bir loyiha men uchun shunchaki ish emas — bu inson brendining hikoyasini jonlantirish jarayoni.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="services-section py-5 bg-light">
+    <div class="container">
+        <div class="section-header text-center mb-5">
+            <h2 class="section-title">Xizmatlarim</h2>
+            <p class="section-subtitle">Professional yondashuv va individual echimlar</p>
+            <div class="section-divider mx-auto"></div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="service-card text-center">
+                    <div class="service-icon">
+                        <i class="fas fa-chess-queen"></i>
+                    </div>
+                    <h4 class="service-title">Shaxsiy Brend Strategiyasi</h4>
+                    <p class="service-description">Shaxsiy brendingning to'liq strategiyasi va pozitsiyalashuv</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="service-card text-center">
+                    <div class="service-icon">
+                        <i class="fas fa-pencil-alt"></i>
+                    </div>
+                    <h4 class="service-title">Kontent Marketing</h4>
+                    <p class="service-description">Auditoriyani jalb qiluvchi va qadrlaydigan kontent yaratish</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="service-card text-center">
+                    <div class="service-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h4 class="service-title">Vizual Identifikatsiya</h4>
+                    <p class="service-description">Yagona va esda qolarli vizual uslub yaratish</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Work Process Section -->
+<section class="process-section py-5">
+    <div class="container">
+        <div class="section-header text-center mb-5">
+            <h2 class="section-title">Ish Jarayoni</h2>
+            <div class="section-divider mx-auto"></div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="process-step text-center">
+                    <div class="step-number">01</div>
+                    <h5 class="step-title">Tahlil va Tadqiqot</h5>
+                    <p class="step-description">Mijoz va bozorni chuqur o'rganish</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="process-step text-center">
+                    <div class="step-number">02</div>
+                    <h5 class="step-title">Strategiya Ishlab Chiqish</h5>
+                    <p class="step-description">Individual brend strategiyasini yaratish</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="process-step text-center">
+                    <div class="step-number">03</div>
+                    <h5 class="step-title">Amaliyot</h5>
+                    <p class="step-description">Strategiyani amalda qo'llash</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="process-step text-center">
+                    <div class="step-number">04</div>
+                    <h5 class="step-title">Monitoring</h5>
+                    <p class="step-description">Natijalarni kuzatish va optimallashtirish</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h3>Shaxsiy brendingizni birgalikda yaratamizmi?</h3>
+                <p class="mb-0">Hoziroq bog'lanib, bepul maslahat oling</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a href="{{ url_for('form') }}" class="btn btn-light btn-lg">
+                    <i class="fas fa-calendar me-2"></i>Konsultatsiya
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

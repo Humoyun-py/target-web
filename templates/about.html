@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Biz Haqimizda - Abduniyoz Aliyorov{% endblock %}
+
+{% block content %}
+<!-- About Hero -->
+<section class="about-hero-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 fw-bold mb-4">Bizning Jamoa</h1>
+                <p class="lead">Professional marketing mutaxassislari jamoasi bilan tanishing</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Team Section -->
+<section class="team-section py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            {% for member in team_members %}
+            <div class="col-lg-4 col-md-6 mb-5">
+                <div class="team-member-card text-center">
+                    <div class="team-member-image">
+                        <img src="{{ url_for('static', filename='images/team/' + (member[3] if member[3] else 'default-avatar.jpg')) }}" 
+                             alt="{{ member[1] }}"
+                             class="member-img"
+                             onerror="this.src={{ url_for('static', filename='images/team/default-avatar.jpg') }}">
+                        <div class="image-overlay"></div>
+                    </div>
+                    <div class="team-member-info">
+                        <h3 class="member-name">{{ member[1] }}</h3>
+                        <h5 class="member-position text-primary">{{ member[2] }}</h5>
+                        <p class="member-description">{{ member[4] if member[4] else 'Professional marketing mutaxassisi' }}</p>
+                        <div class="member-skills">
+                            <span class="skill-tag">Targeting</span>
+                            <span class="skill-tag">SMM</span>
+                            <span class="skill-tag">Strategiya</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Mission Section -->
+<section class="mission-section py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="mb-4">Bizning Missiyamiz</h2>
+                <p class="lead mb-4">Har bir biznes uchun samarali va natijaga yo'naltirilgan raqamli marketing yechimlarini taqdim etish. Bizning maqsadimiz - mijozlarimizning biznesini rivojlantirishga yordam berish.</p>
+                <a href="{{ url_for('form') }}" class="btn btn-light btn-lg">Hamkorlik Qilish</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

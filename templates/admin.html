@@ -1,0 +1,668 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Panel - Abduniyoz Aliyorov{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+            <div class="position-sticky pt-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#dashboard" data-bs-toggle="tab">
+                            <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#statistics" data-bs-toggle="tab">
+                            <i class="fas fa-chart-bar me-2"></i>Statistika
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#applications" data-bs-toggle="tab">
+                            <i class="fas fa-list me-2"></i>Arizalar
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#projects" data-bs-toggle="tab">
+                            <i class="fas fa-project-diagram me-2"></i>Loyihalar
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#team" data-bs-toggle="tab">
+                            <i class="fas fa-users me-2"></i>Jamoa
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9 col-lg-10 ms-sm-auto px-md-4">
+            <div class="tab-content">
+                <!-- Dashboard Tab -->
+                <div class="tab-pane fade show active" id="dashboard">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">Dashboard</h1>
+                        <div class="btn-toolbar mb-2 mb-md-0">
+                            <div class="btn-group me-2">
+                                <span class="btn btn-sm btn-outline-secondary">{{ session.get('username') }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Statistics Cards -->
+                    <div class="row">
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card admin-stat-card border-left-primary">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                Oyliq Arizalar</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ monthly_applications }}</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-calendar fa-2x text-primary"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card admin-stat-card border-left-success">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                Jami Loyihalar</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_projects }}</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-project-diagram fa-2x text-success"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card admin-stat-card border-left-info">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                                Jamoa A'zolari</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ team_members|length }}</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-users fa-2x text-info"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card admin-stat-card border-left-warning">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                Jami Arizalar</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_applications }}</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-clipboard-list fa-2x text-warning"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">Tezkor Amallar</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-3 mb-3">
+                                            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#addProjectModal">
+                                                <i class="fas fa-plus me-2"></i>Loyiha Qo'shish
+                                            </button>
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <button class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#addTeamMemberModal">
+                                                <i class="fas fa-user-plus me-2"></i>Jamoa Qo'shish
+                                            </button>
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <a href="#applications" class="btn btn-info w-100 nav-link" data-bs-toggle="tab">
+                                                <i class="fas fa-eye me-2"></i>Arizalarni Ko'rish
+                                            </a>
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <a href="#statistics" class="btn btn-warning w-100 nav-link" data-bs-toggle="tab">
+                                                <i class="fas fa-chart-bar me-2"></i>Statistikani Ko'rish
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistics Tab -->
+                <div class="tab-pane fade" id="statistics">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">Statistika</h1>
+                    </div>
+
+                    <!-- Detailed Statistics -->
+                    <div class="row">
+                        <div class="col-lg-6 mb-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">Ariza Statistikasi</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="statistics-list">
+                                        <div class="stat-item">
+                                            <span class="stat-label">Bugungi arizalar:</span>
+                                            <span class="stat-value">{{ today_applications }}</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-label">Haftalik arizalar:</span>
+                                            <span class="stat-value">{{ weekly_applications }}</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-label">Oylik arizalar:</span>
+                                            <span class="stat-value">{{ monthly_applications }}</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-label">Jami arizalar:</span>
+                                            <span class="stat-value">{{ total_applications }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 mb-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">Loyiha Statistikasi</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="statistics-list">
+                                        <div class="stat-item">
+                                            <span class="stat-label">Jami loyihalar:</span>
+                                            <span class="stat-value">{{ total_projects }}</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-label">SMM loyihalar:</span>
+                                            <span class="stat-value">{{ smm_projects }}</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-label">Targeting loyihalar:</span>
+                                            <span class="stat-value">{{ target_projects }}</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-label">Brending loyihalar:</span>
+                                            <span class="stat-value">{{ branding_projects }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Section -->
+                    <div class="row">
+                        <div class="col-lg-6 mb-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">Arizalar Grafigi (So'nggi 7 kun)</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-container">
+                                        <canvas id="applicationsChart" width="400" height="200"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 mb-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">Loyihalar Taqsimoti</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-container">
+                                        <canvas id="projectsChart" width="400" height="200"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">So'nggi Faoliyat</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="activity-list">
+                                        {% for app in recent_applications %}
+                                        <div class="activity-item">
+                                            <div class="activity-icon">
+                                                <i class="fas fa-user-plus"></i>
+                                            </div>
+                                            <div class="activity-content">
+                                                <p class="activity-text">
+                                                    <strong>{{ app[1] }}</strong> yangi ariza yubordi
+                                                </p>
+                                                <small class="activity-time">{{ app[5] }}</small>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                        {% if not recent_applications %}
+                                        <div class="text-center py-3">
+                                            <p class="text-muted">Hozircha faoliyat mavjud emas</p>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Applications Tab -->
+                <div class="tab-pane fade" id="applications">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">Arizalar</h1>
+                        <div class="btn-toolbar mb-2 mb-md-0">
+                            <span class="badge bg-primary">Jami: {{ applications|length }}</span>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Ism</th>
+                                    <th>Biznes Turi</th>
+                                    <th>Telefon</th>
+                                    <th>Byudjet</th>
+                                    <th>Sana</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for app in applications %}
+                                <tr>
+                                    <td>{{ app[0] }}</td>
+                                    <td>
+                                        <strong>{{ app[1] }}</strong>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-info">{{ app[2] }}</span>
+                                    </td>
+                                    <td>
+                                        <a href="tel:{{ app[3] }}" class="text-decoration-none">
+                                            <i class="fas fa-phone me-1"></i>{{ app[3] }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-success">{{ app[4] }}</span>
+                                    </td>
+                                    <td>
+                                        <small class="text-muted">{{ app[5] }}</small>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {% if not applications %}
+                    <div class="text-center py-5">
+                        <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                        <h4>Hozircha arizalar mavjud emas</h4>
+                        <p class="text-muted">Mijozlar ariza yuborganidan so'ng bu yerda ko'rinadi</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Projects Tab -->
+                <div class="tab-pane fade" id="projects">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">Loyihalar</h1>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProjectModal">
+                            <i class="fas fa-plus me-2"></i>Yangi Loyiha
+                        </button>
+                    </div>
+
+                    <div class="row">
+                        {% for project in projects %}
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="card project-admin-card">
+                                {% if project[4] %}
+                                <img src="{{ url_for('static', filename='images/projects/' + project[4]) }}" 
+                                     class="card-img-top project-admin-image" alt="{{ project[1] }}"
+                                     onerror="this.src='{{ url_for('static', filename='images/projects/default-project.jpg') }}'">
+                                {% else %}
+                                <div class="project-admin-placeholder">
+                                    <i class="fas fa-image"></i>
+                                </div>
+                                {% endif %}
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ project[1] }}</h5>
+                                    <span class="badge bg-primary">{{ project[3] }}</span>
+                                    <p class="card-text mt-2">{{ project[2] }}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted">{{ project[5] }}</small>
+                                        <a href="{{ url_for('delete_project', project_id=project[0]) }}" 
+                                           class="btn btn-sm btn-outline-danger" 
+                                           onclick="return confirm('Loyihani o\'chirishni istaysizmi?')">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    {% if not projects %}
+                    <div class="text-center py-5">
+                        <i class="fas fa-project-diagram fa-3x text-muted mb-3"></i>
+                        <h4>Hozircha loyihalar mavjud emas</h4>
+                        <p class="text-muted">Yangi loyiha qo'shish uchun "Yangi Loyiha" tugmasini bosing</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Team Tab -->
+                <div class="tab-pane fade" id="team">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">Jamoa A'zolari</h1>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTeamMemberModal">
+                            <i class="fas fa-user-plus me-2"></i>Yangi A'zo
+                        </button>
+                    </div>
+
+                    <div class="row">
+                        {% for member in team_members %}
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="card team-admin-card text-center">
+                                <div class="team-admin-image">
+                                    <img src="{{ url_for('static', filename='images/team/' + (member[3] if member[3] else 'default-avatar.jpg')) }}" 
+                                         alt="{{ member[1] }}"
+                                         class="rounded-circle"
+                                         onerror="this.src={{ url_for('static', filename='images/team/default-avatar.jpg') }}">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ member[1] }}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">{{ member[2] }}</h6>
+                                    <p class="card-text">{{ member[4] if member[4] else 'Professional marketing mutaxassisi' }}</p>
+                                    <a href="{{ url_for('delete_team_member', member_id=member[0]) }}" 
+                                       class="btn btn-sm btn-outline-danger" 
+                                       onclick="return confirm('Jamoa a\'zosini o\'chirishni istaysizmi?')">
+                                        <i class="fas fa-trash me-1"></i>O'chirish
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    {% if not team_members %}
+                    <div class="text-center py-5">
+                        <i class="fas fa-users fa-3x text-muted mb-3"></i>
+                        <h4>Hozircha jamoa a'zolari mavjud emas</h4>
+                        <p class="text-muted">Yangi jamoa a'zosi qo'shish uchun "Yangi A'zo" tugmasini bosing</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Project Modal -->
+<div class="modal fade" id="addProjectModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Yangi Loyiha Qo'shish</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="addProjectForm" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="projectTitle" class="form-label">Loyiha Nomi</label>
+                        <input type="text" class="form-control" id="projectTitle" name="title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="projectDescription" class="form-label">Tavsif</label>
+                        <textarea class="form-control" id="projectDescription" name="description" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="projectCategory" class="form-label">Kategoriya</label>
+                        <select class="form-select" id="projectCategory" name="category" required>
+                            <option value="">Tanlang</option>
+                            <option value="SMM">SMM</option>
+                            <option value="Target">Targeting</option>
+                            <option value="Branding">Brending</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="projectImage" class="form-label">Loyiha Rasmi</label>
+                        <input type="file" class="form-control" id="projectImage" name="image" accept="image/*">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor Qilish</button>
+                    <button type="submit" class="btn btn-primary">Qo'shish</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Add Team Member Modal -->
+<div class="modal fade" id="addTeamMemberModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Yangi Jamoa A'zosi Qo'shish</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="addTeamMemberForm" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="memberName" class="form-label">Ism Familiya</label>
+                        <input type="text" class="form-control" id="memberName" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="memberPosition" class="form-label">Lavozim</label>
+                        <input type="text" class="form-control" id="memberPosition" name="position" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="memberDescription" class="form-label">Tavsif</label>
+                        <textarea class="form-control" id="memberDescription" name="description" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="memberImage" class="form-label">Profil Rasmi</label>
+                        <input type="file" class="form-control" id="memberImage" name="image" accept="image/*">
+                        <div class="form-text">Agar rasm tanlamasangiz, standart rasm ishlatiladi</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor Qilish</button>
+                    <button type="submit" class="btn btn-primary">Qo'shish</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Tab functionality
+    document.querySelectorAll('.nav-link[data-bs-toggle="tab"]').forEach(tab => {
+        tab.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = this.getAttribute('href');
+            
+            // Hide all tab panes
+            document.querySelectorAll('.tab-pane').forEach(pane => {
+                pane.classList.remove('show', 'active');
+            });
+            
+            // Show target tab pane
+            const targetPane = document.querySelector(target);
+            if (targetPane) {
+                targetPane.classList.add('show', 'active');
+            }
+            
+            // Update active nav link
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            this.classList.add('active');
+        });
+    });
+
+    // Initialize charts if they exist
+    const applicationsChartCanvas = document.getElementById('applicationsChart');
+    const projectsChartCanvas = document.getElementById('projectsChart');
+    
+    if (applicationsChartCanvas) {
+        const applicationsCtx = applicationsChartCanvas.getContext('2d');
+        const applicationsChart = new Chart(applicationsCtx, {
+            type: 'line',
+            data: {
+                labels: ['Dushanba', 'Seshanba', 'Chorshanba', 'Payshanba', 'Juma', 'Shanba', 'Yakshanba'],
+                datasets: [{
+                    label: 'Arizalar soni',
+                    data: [12, 19, 3, 5, 2, 3, 7],
+                    backgroundColor: 'rgba(102, 126, 234, 0.2)',
+                    borderColor: 'rgba(102, 126, 234, 1)',
+                    borderWidth: 2,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    if (projectsChartCanvas) {
+        const projectsCtx = projectsChartCanvas.getContext('2d');
+        const projectsChart = new Chart(projectsCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['SMM', 'Targeting', 'Brending'],
+                datasets: [{
+                    data: [{{ smm_projects }}, {{ target_projects }}, {{ branding_projects }}],
+                    backgroundColor: [
+                        'rgba(102, 126, 234, 0.8)',
+                        'rgba(40, 167, 69, 0.8)',
+                        'rgba(255, 193, 7, 0.8)'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+    }
+
+    // Add project form
+    const addProjectForm = document.getElementById('addProjectForm');
+    if (addProjectForm) {
+        addProjectForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            
+            fetch('{{ url_for("add_project") }}', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert('Xatolik yuz berdi');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Xatolik yuz berdi');
+            });
+        });
+    }
+
+    // Add team member form
+    const addTeamMemberForm = document.getElementById('addTeamMemberForm');
+    if (addTeamMemberForm) {
+        addTeamMemberForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            
+            fetch('{{ url_for("add_team_member") }}', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert('Xatolik yuz berdi');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Xatolik yuz berdi');
+            });
+        });
+    }
+});
+</script>
+{% endblock %}
+{% endblock %}

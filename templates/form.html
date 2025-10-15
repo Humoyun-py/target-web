@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block title %}Ariza Yuborish - Abduniyoz Aliyorov{% endblock %}
+
+{% block content %}
+<!-- Form Hero -->
+<section class="form-hero-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 fw-bold mb-4">Ariza Yuborish</h1>
+                <p class="lead">Biznesingizni rivojlantirish uchun ariza qoldiring. Biz siz bilan tez orada bog'lanamiz</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Application Form -->
+<section class="form-section py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow">
+                    <div class="card-body p-5">
+                        <form id="applicationForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="full_name" class="form-label">Ism va Familiya *</label>
+                                    <input type="text" class="form-control" id="full_name" name="full_name" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="business_type" class="form-label">Biznes Yo'nalishi *</label>
+                                    <select class="form-select" id="business_type" name="business_type" required>
+                                        <option value="">Tanlang</option>
+                                        <option value="Savdo">Savdo</option>
+                                        <option value="Xizmat ko'rsatish">Xizmat ko'rsatish</option>
+                                        <option value="Ishlab chiqarish">Ishlab chiqarish</option>
+                                        <option value="Ta'lim">Ta'lim</option>
+                                        <option value="Turizm">Turizm</option>
+                                        <option value="Boshqa">Boshqa</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="phone" class="form-label">Telefon Raqam *</label>
+                                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="+998 XX XXX XX XX" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="budget" class="form-label">Byudjet Miqdori *</label>
+                                    <select class="form-select" id="budget" name="budget" required>
+                                        <option value="">Tanlang</option>
+                                        <option value="1-3 million">1-3 million so'm</option>
+                                        <option value="3-5 million">3-5 million so'm</option>
+                                        <option value="5-10 million">5-10 million so'm</option>
+                                        <option value="10-20 million">10-20 million so'm</option>
+                                        <option value="20 million+">20 million so'mdan yuqori</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="message" class="form-label">Qo'shimcha Ma'lumot (ixtiyoriy)</label>
+                                <textarea class="form-control" id="message" name="message" rows="4" placeholder="Biznesingiz haqida qo'shimcha ma'lumot..."></textarea>
+                            </div>
+
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary btn-lg px-5">
+                                    <span id="submitText">Ariza Yuborish</span>
+                                    <div id="submitSpinner" class="spinner-border spinner-border-sm d-none" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Success Modal -->
+<div class="modal fade" id="successModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center py-4">
+                <div class="success-icon mb-3">
+                    <i class="fas fa-check-circle text-success" style="font-size: 4rem;"></i>
+                </div>
+                <h4 class="text-success">✅ Arizangiz Yuborildi!</h4>
+                <p class="text-muted mt-3">Tez orada siz bilan bog'lanamiz. Rahmat!</p>
+            </div>
+            <div class="modal-footer border-0 justify-content-center">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Yakunlash</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('applicationForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const submitText = document.getElementById('submitText');
+    const submitSpinner = document.getElementById('submitSpinner');
+    
+    // Show loading state
+    submitText.textContent = 'Yuborilmoqda...';
+    submitSpinner.classList.remove('d-none');
+    submitBtn.disabled = true;
+    
+    // Send form data
+    fetch('{{ url_for("form") }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams(new FormData(this))
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Show success modal
+            const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+            successModal.show();
+            
+            // Reset form
+            this.reset();
+        } else {
+            alert('Xatolik yuz berdi. Iltimos, qaytadan urinib ko\'ring.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Xatolik yuz berdi. Iltimos, qaytadan urinib ko\'ring.');
+    })
+    .finally(() => {
+        // Reset button state
+        submitText.textContent = 'Ariza Yuborish';
+        submitSpinner.classList.add('d-none');
+        submitBtn.disabled = false;
+    });
+});
+</script>
+{% endblock %}

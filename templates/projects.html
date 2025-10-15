@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}Loyihalar - Abduniyoz Aliyorov{% endblock %}
+
+{% block content %}
+<!-- Projects Hero -->
+<section class="projects-hero-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 fw-bold mb-4">Bizning Loyihalar</h1>
+                <p class="lead">Ishlagan muvaffaqiyatli loyihalarimiz bilan tanishing</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Filter Section -->
+<section class="filter-section py-4 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="filter-buttons text-center">
+                    <a href="{{ url_for('projects') }}" class="btn btn-outline-primary me-2 mb-2 {% if not current_category %}active{% endif %}">Hammasi</a>
+                    <a href="{{ url_for('projects') }}?category=SMM" class="btn btn-outline-primary me-2 mb-2 {% if current_category == 'SMM' %}active{% endif %}">SMM</a>
+                    <a href="{{ url_for('projects') }}?category=Target" class="btn btn-outline-primary me-2 mb-2 {% if current_category == 'Target' %}active{% endif %}">Targeting</a>
+                    <a href="{{ url_for('projects') }}?category=Branding" class="btn btn-outline-primary me-2 mb-2 {% if current_category == 'Branding' %}active{% endif %}">Brending</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Projects Grid -->
+<section class="projects-grid-section py-5">
+    <div class="container">
+        {% if projects %}
+        <div class="row">
+            {% for project in projects %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="project-card">
+                    <div class="project-image">
+                        {% if project[4] %}
+                        <img src="{{ url_for('static', filename='images/projects/' + project[4]) }}" 
+                             alt="{{ project[1] }}"
+                             class="img-fluid"
+                             onerror="this.src={{ url_for('static', filename='images/projects/default-project.jpg')}}">
+                        {% else %}
+                        <div class="project-image-placeholder">
+                            <i class="fas fa-image"></i>
+                        </div>
+                        {% endif %}
+                        <div class="project-overlay">
+                            <span class="project-category">{{ project[3] }}</span>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h5 class="project-title">{{ project[1] }}</h5>
+                        <p class="project-description">{{ project[2] }}</p>
+                        <div class="project-meta">
+                            <small class="text-muted">{{ project[5] }}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="empty-projects">
+                    <i class="fas fa-folder-open fa-3x text-muted mb-3"></i>
+                    <h4>Hozircha loyihalar mavjud emas</h4>
+                    <p class="text-muted">Tez orada yangi loyihalar qo'shiladi</p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
